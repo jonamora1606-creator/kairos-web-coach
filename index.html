@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos — Para Coaches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200;1,300&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#FFB020;--gold2:#ffcc66;--gold-dim:rgba(255,176,32,0.12);--bg:#050505;--bg2:#080808;--text:#ffffff;--dim:rgba(255,255,255,0.45);--mute:rgba(255,255,255,0.18);--border:rgba(255,176,32,0.1);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
+.cur{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+.cur-r{width:32px;height:32px;border:1px solid rgba(255,176,32,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+@media(hover:none){.cur,.cur-r{display:none;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(5,5,5,.95),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:20px;letter-spacing:.5em;color:var(--gold);text-decoration:none;}
+.nav-links{display:flex;gap:40px;align-items:center;}
+.nav-links a{font-size:11px;letter-spacing:.2em;color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{color:var(--bg)!important;background:var(--gold);padding:10px 28px;border-radius:1px;font-weight:400;}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 40px 100px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 30%,rgba(255,176,32,.07) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 70%,rgba(58,141,255,.04) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 50%,rgba(255,176,32,.03) 0%,transparent 70%);animation:bgPulse 10s ease-in-out infinite;}
+@keyframes bgPulse{0%,100%{opacity:1;}50%{opacity:.7;}}
+.hero-eyebrow{font-size:10px;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:20px;opacity:0;animation:up .9s ease forwards .1s;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(72px,11vw,140px);line-height:.9;letter-spacing:-.01em;opacity:0;animation:up .9s ease forwards .3s;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-divider{width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:48px auto;opacity:0;animation:up .9s ease forwards .5s;}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);line-height:1.8;max-width:560px;margin-bottom:64px;opacity:0;animation:up .9s ease forwards .7s;}
+.hero-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;opacity:0;animation:up .9s ease forwards .9s;}
+.btn-gold{background:linear-gradient(135deg,#FFB020,#ffcc66);color:#050505;padding:18px 48px;border-radius:1px;font-size:12px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;font-weight:400;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.btn-gold::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transition:left .6s;}
+.btn-gold:hover::after{left:100%;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 24px 80px rgba(255,176,32,.25);}
+.btn-line{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);text-decoration:none;border-bottom:1px solid var(--mute);padding-bottom:3px;transition:color .3s,border-color .3s;}
+.btn-line:hover{color:var(--text);border-color:var(--dim);}
+.hero-scroll{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;animation:up .9s ease forwards 1.2s;}
+.hero-scroll span{font-size:9px;letter-spacing:.4em;color:var(--mute);text-transform:uppercase;}
+.scroll-bar{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:.4;}50%{transform:scaleY(1.3);opacity:1;}}
+.marquee-wrap{padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--bg2);}
+.marquee{display:flex;gap:0;white-space:nowrap;animation:marquee 20s linear infinite;}
+.marquee-item{font-family:'Cormorant Garamond',serif;font-weight:200;font-style:italic;font-size:28px;color:var(--dim);padding:0 48px;letter-spacing:.05em;display:flex;align-items:center;gap:24px;}
+.marquee-item .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+section{padding:140px 60px;}
+.s-inner{max-width:1100px;margin:0 auto;}
+.s-label{font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+.s-label::after{content:'';width:60px;height:1px;background:var(--gold);opacity:.3;}
+.pain-head{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,6vw,72px);line-height:1.05;max-width:800px;margin-bottom:100px;}
+.pain-head em{font-style:italic;color:var(--gold);}
+.pain-items{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.pain-item{background:var(--bg);padding:56px 44px;border-top:1px solid transparent;transition:border-color .4s,background .4s;}
+.pain-item:hover{border-top-color:var(--gold);background:rgba(255,176,32,.02);}
+.pain-big{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:80px;color:var(--gold);opacity:.3;line-height:1;margin-bottom:24px;}
+.pain-item h3{font-size:17px;font-weight:400;margin-bottom:14px;letter-spacing:.02em;}
+.pain-item p{font-size:14px;color:var(--dim);line-height:1.75;}
+.feat-section{background:var(--bg2);}
+.feat-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px;}
+.feat-intro h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,5vw,64px);line-height:1.05;}
+.feat-intro h2 em{font-style:italic;color:var(--gold);}
+.feat-intro p{font-size:15px;color:var(--dim);line-height:1.85;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.feat-card{background:var(--bg2);padding:48px 40px;position:relative;overflow:hidden;transition:background .4s;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s;}
+.feat-card:hover::before{transform:scaleX(1);}
+.feat-card:hover{background:rgba(255,176,32,.025);}
+.feat-num{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:13px;color:var(--gold);opacity:.5;letter-spacing:.2em;margin-bottom:32px;}
+.feat-card h3{font-size:17px;font-weight:400;margin-bottom:14px;}
+.feat-card p{font-size:14px;color:var(--dim);line-height:1.75;}
+.feat-badge{display:inline-block;margin-top:24px;font-size:9px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;border:1px solid var(--gold-dim);padding:5px 14px;border-radius:20px;}
+.statement{background:var(--bg);text-align:center;padding:160px 60px;position:relative;overflow:hidden;}
+.statement::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1200px;height:600px;background:radial-gradient(ellipse,rgba(255,176,32,.06),transparent 60%);pointer-events:none;}
+.statement h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(48px,8vw,100px);line-height:.95;max-width:900px;margin:0 auto;}
+.statement h2 em{font-style:italic;color:var(--gold);}
+.proof{background:var(--bg2);}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.proof-card{background:var(--bg2);padding:56px 44px;}
+.proof-num{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:80px;color:var(--gold);line-height:1;margin-bottom:16px;}
+.proof-label{font-size:14px;color:var(--dim);line-height:1.6;max-width:200px;}
+.compare h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,5vw,64px);line-height:1.05;max-width:600px;margin-bottom:80px;}
+.compare h2 em{font-style:italic;color:var(--gold);}
+.compare-table{width:100%;border-collapse:collapse;}
+.compare-table th{padding:20px 32px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);font-weight:300;text-align:left;border-bottom:1px solid var(--border);}
+.compare-table th:last-child{color:var(--gold);}
+.compare-table td{padding:24px 32px;font-size:14px;color:var(--dim);border-bottom:1px solid rgba(255,255,255,.04);}
+.compare-table td:first-child{color:var(--text);font-weight:300;}
+.compare-table td.no{color:var(--mute);}
+.compare-table td.yes{color:var(--gold);}
+.compare-table tr:hover td{background:rgba(255,176,32,.015);}
+.cta-final{background:var(--bg);text-align:center;padding:180px 60px;position:relative;overflow:hidden;}
+.cta-final::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(255,176,32,.08),transparent 60%);pointer-events:none;}
+.cta-final h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(56px,9vw,112px);line-height:.9;margin-bottom:48px;}
+.cta-final h2 em{font-style:italic;color:var(--gold);}
+.cta-final p{font-size:16px;color:var(--dim);line-height:1.8;max-width:480px;margin:0 auto 64px;}
+.cta-final p strong{color:var(--gold);font-weight:300;}
+.btn-cta{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,#FFB020,#ffcc66);color:#050505;padding:22px 56px;border-radius:1px;font-size:13px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;font-weight:400;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.btn-cta::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s;}
+.btn-cta:hover::after{left:100%;}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 32px 100px rgba(255,176,32,.3);}
+.spots{margin-top:32px;font-size:12px;letter-spacing:.15em;color:var(--mute);text-transform:uppercase;}
+.spots span{color:var(--gold);}
+footer{padding:48px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+footer p{font-size:12px;color:var(--mute);letter-spacing:.1em;}
+footer a{font-size:12px;color:var(--dim);text-decoration:none;letter-spacing:.1em;transition:color .3s;}
+footer a:hover{color:var(--gold);}
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){
+  nav{padding:20px 24px;}
+  .nav-links{display:none;}
+  section{padding:80px 24px;}
+  .hero{padding:120px 24px 100px;}
+  .pain-items,.feat-grid,.proof-grid{grid-template-columns:1fr;}
+  .feat-intro{grid-template-columns:1fr;gap:32px;}
+  .compare-table th:nth-child(2),.compare-table td:nth-child(2){display:none;}
+  footer{flex-direction:column;gap:20px;text-align:center;}
+}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav>
+  <a href="#" class="logo">KAIROS</a>
+  <div class="nav-links">
+    <a href="#features">Funciones</a>
+    <a href="#proof">Resultados</a>
+    <a href="kairos-clientes.html" class="nav-cta">Para clientes</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Para entrenadores personales</p>
+  <h1>Gestiona<br><em>diferente.</em><br>Crece más.</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">La primera plataforma de gestión de entrenadores construida para LATAM. En español. Con IA. Con SINPE. Para la forma en que realmente trabajás.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-gold">Solicitar acceso</a>
+    <a href="#features" class="btn-line">Ver funciones ↓</a>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="marquee-item">Rutinas con IA <span class="dot"></span></div>
+    <div class="marquee-item">Nutrición personalizada <span class="dot"></span></div>
+    <div class="marquee-item">Pagos SINPE <span class="dot"></span></div>
+    <div class="marquee-item">Analytics de negocio <span class="dot"></span></div>
+    <div class="marquee-item">App para tus clientes <span class="dot"></span></div>
+    <div class="marquee-item">Push notifications <span class="dot"></span></div>
+    <div class="marquee-item">Agenda integrada <span class="dot"></span></div>
+    <div class="marquee-item">Chat directo <span class="dot"></span></div>
+    <div class="marquee-item">Rutinas con IA <span class="dot"></span></div>
+    <div class="marquee-item">Nutrición personalizada <span class="dot"></span></div>
+    <div class="marquee-item">Pagos SINPE <span class="dot"></span></div>
+    <div class="marquee-item">Analytics de negocio <span class="dot"></span></div>
+    <div class="marquee-item">App para tus clientes <span class="dot"></span></div>
+    <div class="marquee-item">Push notifications <span class="dot"></span></div>
+    <div class="marquee-item">Agenda integrada <span class="dot"></span></div>
+    <div class="marquee-item">Chat directo <span class="dot"></span></div>
+  </div>
+</div>
+
+<section class="pain-section" style="background:var(--bg);">
+  <div class="s-inner">
+    <p class="s-label reveal">El problema</p>
+    <h2 class="pain-head reveal">¿Cuánto tiempo perdés<br>en cosas que<br><em>no son entrenar?</em></h2>
+    <div class="pain-items">
+      <div class="pain-item reveal">
+        <div class="pain-big">01</div>
+        <h3>WhatsApp no es un sistema</h3>
+        <p>Rutinas perdidas entre conversaciones. Clientes que no saben qué hacer hoy. Vos respondiendo mensajes a las 11pm.</p>
+      </div>
+      <div class="pain-item reveal">
+        <div class="pain-big">02</div>
+        <h3>No sabés quién está a punto de irse</h3>
+        <p>Sin datos de adherencia, sin seguimiento real, perdés clientes sin entender por qué. El churn te cuesta más de lo que imaginás.</p>
+      </div>
+      <div class="pain-item reveal">
+        <div class="pain-big">03</div>
+        <h3>Tu negocio no escala</h3>
+        <p>Con 10 clientes funciona. Con 30, todo se rompe. El sistema que usás hoy tiene un techo — y ya lo estás tocando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feat-section" id="features">
+  <div class="s-inner">
+    <p class="s-label reveal">La solución</p>
+    <div class="feat-intro">
+      <h2 class="reveal">Todo lo que<br>necesitás.<br><em>Sin lo que no.</em></h2>
+      <p class="reveal">Kairos no es otra app de fitness. Es el sistema operativo de tu negocio como entrenador — construido para LATAM, con las herramientas que realmente usás.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal"><p class="feat-num">01</p><h3>Rutinas con IA</h3><p>Generá planes de entrenamiento completamente personalizados en segundos. La IA considera nivel, lesiones y objetivos individuales.</p><span class="feat-badge">Claude AI</span></div>
+      <div class="feat-card reveal"><p class="feat-num">02</p><h3>Nutrición personalizada</h3><p>Planes nutricionales completos con macros, calorías y agua. Generados con IA, editables por vos, visibles por tu cliente en tiempo real.</p><span class="feat-badge">IA generativa</span></div>
+      <div class="feat-card reveal"><p class="feat-num">03</p><h3>Pagos SINPE integrados</h3><p>Cobrá sin perseguir a nadie. Cuotas configurables por cliente, alertas automáticas de mora y registro completo de pagos.</p><span class="feat-badge">Costa Rica</span></div>
+      <div class="feat-card reveal"><p class="feat-num">04</p><h3>Analytics de negocio</h3><p>Ingresos reales vs potencial, retención a 1/3/6 meses, clientes en riesgo. Tomá decisiones con datos, no con intuición.</p><span class="feat-badge">Dashboard</span></div>
+      <div class="feat-card reveal"><p class="feat-num">05</p><h3>App para tus clientes</h3><p>Cada cliente tiene su propia app instalada en el celular. Ve su rutina, registra su progreso, te escribe — todo en una interfaz premium.</p><span class="feat-badge">PWA instalable</span></div>
+      <div class="feat-card reveal"><p class="feat-num">06</p><h3>Agenda y notificaciones</h3><p>Booking integrado, push notifications reales, recordatorios automáticos. Tus clientes nunca olvidan entrenar.</p><span class="feat-badge">Automatizado</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <h2 class="reveal">Los mejores<br>entrenadores no<br>trabajan <em>más.</em><br>Trabajan <em>mejor.</em></h2>
+</section>
+
+<section class="proof" id="proof">
+  <div class="s-inner">
+    <p class="s-label reveal">Por qué importa</p>
+    <div class="proof-grid">
+      <div class="proof-card reveal"><div class="proof-num">30s</div><p class="proof-label">Para generar una rutina completa personalizada con IA</p></div>
+      <div class="proof-card reveal"><div class="proof-num">∞</div><p class="proof-label">Clientes que podés gestionar desde un solo panel</p></div>
+      <div class="proof-card reveal"><div class="proof-num">0</div><p class="proof-label">Apps adicionales — todo vive dentro de Kairos</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="compare" style="background:var(--bg);">
+  <div class="s-inner">
+    <p class="s-label reveal">La diferencia</p>
+    <h2 class="reveal">Kairos vs<br><em>el resto</em></h2>
+    <table class="compare-table reveal">
+      <thead>
+        <tr><th>Función</th><th>WhatsApp + Excel</th><th>Kairos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rutinas personalizadas con IA</td><td class="no">—</td><td class="yes">◈ Incluido</td></tr>
+        <tr><td>App para el cliente en su celular</td><td class="no">—</td><td class="yes">◈ Incluido</td></tr>
+        <tr><td>Pagos SINPE integrados</td><td class="no">Manual</td><td class="yes">◈ Automatizado</td></tr>
+        <tr><td>Analytics de retención</td><td class="no">—</td><td class="yes">◈ Incluido</td></tr>
+        <tr><td>Notificaciones push reales</td><td class="no">—</td><td class="yes">◈ Incluido</td></tr>
+        <tr><td>Agenda y booking</td><td class="no">Manual</td><td class="yes">◈ Integrado</td></tr>
+        <tr><td>Seguimiento de progreso</td><td class="no">Fotos por WA</td><td class="yes">◈ Dashboard completo</td></tr>
+        <tr><td>Idioma</td><td class="no">—</td><td class="yes">◈ Español LATAM</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="cta-final" id="contact">
+  <h2 class="reveal">Tu negocio<br>te está<br><em>esperando.</em></h2>
+  <p class="reveal">Kairos está en acceso limitado. <strong>10 cupos founders</strong> para entrenadores que quieren ser los primeros en gestionar diferente.</p>
+  <a href="https://wa.me/50600000000" class="btn-cta reveal">Solicitar acceso →</a>
+  <p class="spots reveal">Solo <span>10 cupos disponibles</span> — precio especial para founders</p>
+</section>
+
+<footer>
+  <a href="#" style="font-family:'Cormorant Garamond',serif;font-weight:200;font-size:18px;letter-spacing:.4em;color:var(--gold);text-decoration:none;">KAIROS</a>
+  <p>© 2025 Kairos — Todos los derechos reservados</p>
+  <a href="kairos-clientes.html">Para clientes →</a>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*100);});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
