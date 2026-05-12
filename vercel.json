@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{"type": "host", "value": "clientes.kairosclubs.com"}],
+      "destination": "/kairos-clientes.html"
+    },
+    {
+      "source": "/",
+      "has": [{"type": "host", "value": "coach.kairosclubs.com"}],
+      "destination": "/kairos-coaches.html"
+    }
+  ]
+}
