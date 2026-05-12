@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos — Tu entrenamiento, reinventado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200;1,300&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#FFB020;--gold2:#ffcc66;--gold-dim:rgba(255,176,32,0.12);--bg:#050505;--bg2:#080808;--text:#ffffff;--dim:rgba(255,255,255,0.45);--mute:rgba(255,255,255,0.18);--border:rgba(255,176,32,0.1);--success:#4ade80;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
+.cur{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+.cur-r{width:32px;height:32px;border:1px solid rgba(255,176,32,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+@media(hover:none){.cur,.cur-r{display:none;}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(5,5,5,.95),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:20px;letter-spacing:.5em;color:var(--gold);text-decoration:none;}
+.nav-links{display:flex;gap:40px;align-items:center;}
+.nav-links a{font-size:11px;letter-spacing:.2em;color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{color:var(--bg)!important;background:var(--gold);padding:10px 28px;border-radius:1px;font-weight:400;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 40px 100px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 20%,rgba(255,176,32,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 80%,rgba(58,141,255,.04) 0%,transparent 60%);animation:bgPulse 12s ease-in-out infinite;}
+@keyframes bgPulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.hero-eyebrow{font-size:10px;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:20px;opacity:0;animation:up .9s ease forwards .1s;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(64px,10vw,128px);line-height:.9;letter-spacing:-.01em;opacity:0;animation:up .9s ease forwards .3s;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-divider{width:1px;height:80px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:48px auto;opacity:0;animation:up .9s ease forwards .5s;}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);line-height:1.8;max-width:520px;margin-bottom:64px;opacity:0;animation:up .9s ease forwards .7s;}
+.hero-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;opacity:0;animation:up .9s ease forwards .9s;}
+.btn-gold{background:linear-gradient(135deg,#FFB020,#ffcc66);color:#050505;padding:18px 48px;border-radius:1px;font-size:12px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;font-weight:400;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.btn-gold::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transition:left .6s;}
+.btn-gold:hover::after{left:100%;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 24px 80px rgba(255,176,32,.25);}
+.btn-line{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);text-decoration:none;border-bottom:1px solid var(--mute);padding-bottom:3px;transition:color .3s,border-color .3s;}
+.btn-line:hover{color:var(--text);border-color:var(--dim);}
+.hero-scroll{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;animation:up .9s ease forwards 1.2s;}
+.hero-scroll span{font-size:9px;letter-spacing:.4em;color:var(--mute);text-transform:uppercase;}
+.scroll-bar{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:.4;}50%{transform:scaleY(1.3);opacity:1;}}
+
+/* MARQUEE */
+.marquee-wrap{padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:var(--bg2);}
+.marquee{display:flex;gap:0;white-space:nowrap;animation:marquee 25s linear infinite;}
+.marquee-item{font-family:'Cormorant Garamond',serif;font-weight:200;font-style:italic;font-size:28px;color:var(--dim);padding:0 48px;letter-spacing:.05em;display:flex;align-items:center;gap:24px;}
+.marquee-item .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:140px 60px;}
+.s-inner{max-width:1100px;margin:0 auto;}
+.s-label{font-size:10px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+.s-label::after{content:'';width:60px;height:1px;background:var(--gold);opacity:.3;}
+
+/* TRUTH */
+.truth{background:var(--bg);}
+.truth-head{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,6vw,72px);line-height:1.05;max-width:800px;margin-bottom:100px;}
+.truth-head em{font-style:italic;color:var(--gold);}
+.truth-items{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.truth-item{background:var(--bg);padding:56px 44px;border-top:1px solid transparent;transition:border-color .4s,background .4s;}
+.truth-item:hover{border-top-color:var(--gold);background:rgba(255,176,32,.02);}
+.truth-big{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:80px;color:var(--gold);opacity:.3;line-height:1;margin-bottom:24px;}
+.truth-item h3{font-size:17px;font-weight:400;margin-bottom:14px;}
+.truth-item p{font-size:14px;color:var(--dim);line-height:1.75;}
+
+/* EXPERIENCE */
+.exp{background:var(--bg2);}
+.exp-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px;}
+.exp-intro h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,5vw,64px);line-height:1.05;}
+.exp-intro h2 em{font-style:italic;color:var(--gold);}
+.exp-intro p{font-size:15px;color:var(--dim);line-height:1.85;}
+.exp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);}
+.exp-card{background:var(--bg2);padding:56px 48px;position:relative;overflow:hidden;transition:background .4s;}
+.exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s;}
+.exp-card:hover::before{transform:scaleX(1);}
+.exp-card:hover{background:rgba(255,176,32,.02);}
+.exp-icon{font-size:32px;margin-bottom:28px;display:block;}
+.exp-card h3{font-size:20px;font-weight:400;margin-bottom:16px;letter-spacing:.02em;}
+.exp-card p{font-size:14px;color:var(--dim);line-height:1.8;}
+.exp-detail{margin-top:20px;font-size:12px;color:var(--gold);letter-spacing:.1em;opacity:.7;}
+
+/* JOURNEY */
+.journey{background:var(--bg);text-align:center;}
+.journey h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,6vw,72px);line-height:1.05;margin-bottom:80px;}
+.journey h2 em{font-style:italic;color:var(--gold);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);text-align:left;}
+.step{background:var(--bg);padding:48px 36px;position:relative;}
+.step-num{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:64px;color:var(--gold);opacity:.2;line-height:1;margin-bottom:20px;}
+.step h3{font-size:16px;font-weight:400;margin-bottom:12px;}
+.step p{font-size:13px;color:var(--dim);line-height:1.7;}
+.step-arrow{position:absolute;top:48px;right:-12px;font-size:20px;color:var(--gold);opacity:.3;z-index:1;}
+
+/* STATEMENT */
+.statement{background:var(--bg2);text-align:center;padding:160px 60px;position:relative;overflow:hidden;}
+.statement::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1200px;height:600px;background:radial-gradient(ellipse,rgba(255,176,32,.06),transparent 60%);pointer-events:none;}
+.statement h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(48px,8vw,100px);line-height:.95;max-width:900px;margin:0 auto;}
+.statement h2 em{font-style:italic;color:var(--gold);}
+
+/* STREAKS */
+.streaks{background:var(--bg);}
+.streak-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.streak-card{background:var(--bg);padding:56px 44px;}
+.streak-num{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:80px;color:var(--gold);line-height:1;margin-bottom:16px;}
+.streak-label{font-size:14px;color:var(--dim);line-height:1.6;max-width:220px;}
+
+/* CTA */
+.cta-final{background:var(--bg2);text-align:center;padding:180px 60px;position:relative;overflow:hidden;}
+.cta-final::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(255,176,32,.08),transparent 60%);pointer-events:none;}
+.cta-final h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(56px,9vw,112px);line-height:.9;margin-bottom:48px;}
+.cta-final h2 em{font-style:italic;color:var(--gold);}
+.cta-final p{font-size:16px;color:var(--dim);line-height:1.8;max-width:480px;margin:0 auto 64px;}
+.cta-final p strong{color:var(--gold);font-weight:300;}
+.btn-cta{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,#FFB020,#ffcc66);color:#050505;padding:22px 56px;border-radius:1px;font-size:13px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;font-weight:400;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.btn-cta::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s;}
+.btn-cta:hover::after{left:100%;}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 32px 100px rgba(255,176,32,.3);}
+
+/* FOOTER */
+footer{padding:48px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+footer p{font-size:12px;color:var(--mute);letter-spacing:.1em;}
+footer a{font-size:12px;color:var(--dim);text-decoration:none;letter-spacing:.1em;transition:color .3s;}
+footer a:hover{color:var(--gold);}
+
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:20px 24px;}
+  .nav-links{display:none;}
+  section{padding:80px 24px;}
+  .hero{padding:120px 24px 100px;}
+  .truth-items,.exp-grid,.streak-grid{grid-template-columns:1fr;}
+  .exp-intro{grid-template-columns:1fr;gap:32px;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .step-arrow{display:none;}
+  footer{flex-direction:column;gap:20px;text-align:center;}
+}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav>
+  <a href="#" class="logo">KAIROS</a>
+  <div class="nav-links">
+    <a href="#experience">Tu experiencia</a>
+    <a href="#journey">Cómo funciona</a>
+    <a href="coach.kairosclubs.com" class="nav-cta">Para coaches</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Tu entrenamiento, reinventado</p>
+  <h1>Resultados<br>que <em>duran.</em></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Por primera vez, tu entrenamiento y nutrición están completamente personalizados, en tu celular, con seguimiento real de un coach que te ve progresar cada día.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-gold">Quiero empezar</a>
+    <a href="#experience" class="btn-line">Ver cómo funciona ↓</a>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="marquee-item">Rutina personalizada <span class="dot"></span></div>
+    <div class="marquee-item">Nutrición con IA <span class="dot"></span></div>
+    <div class="marquee-item">Seguimiento real <span class="dot"></span></div>
+    <div class="marquee-item">Tu coach siempre disponible <span class="dot"></span></div>
+    <div class="marquee-item">Rachas de entrenamiento <span class="dot"></span></div>
+    <div class="marquee-item">Progreso visible <span class="dot"></span></div>
+    <div class="marquee-item">Sin excusas <span class="dot"></span></div>
+    <div class="marquee-item">Resultados medibles <span class="dot"></span></div>
+    <div class="marquee-item">Rutina personalizada <span class="dot"></span></div>
+    <div class="marquee-item">Nutrición con IA <span class="dot"></span></div>
+    <div class="marquee-item">Seguimiento real <span class="dot"></span></div>
+    <div class="marquee-item">Tu coach siempre disponible <span class="dot"></span></div>
+    <div class="marquee-item">Rachas de entrenamiento <span class="dot"></span></div>
+    <div class="marquee-item">Progreso visible <span class="dot"></span></div>
+    <div class="marquee-item">Sin excusas <span class="dot"></span></div>
+    <div class="marquee-item">Resultados medibles <span class="dot"></span></div>
+  </div>
+</div>
+
+<!-- TRUTH -->
+<section class="truth">
+  <div class="s-inner">
+    <p class="s-label reveal">La verdad</p>
+    <h2 class="truth-head reveal">No fallaste.<br>Nunca tuviste el<br><em>sistema correcto.</em></h2>
+    <div class="truth-items">
+      <div class="truth-item reveal">
+        <div class="truth-big">01</div>
+        <h3>Las rutinas genéricas no funcionan</h3>
+        <p>Un plan que no fue diseñado para tu cuerpo, tu horario y tus objetivos no puede darte resultados. Nunca pudo.</p>
+      </div>
+      <div class="truth-item reveal">
+        <div class="truth-big">02</div>
+        <h3>Sin seguimiento, no hay progreso</h3>
+        <p>Los resultados no vienen de entrenar más. Vienen de entrenar con datos — saber qué funciona y ajustar en tiempo real.</p>
+      </div>
+      <div class="truth-item reveal">
+        <div class="truth-big">03</div>
+        <h3>La motivación sola no alcanza</h3>
+        <p>La consistencia viene de tener un sistema. Rachas, metas claras, un coach que te ve — eso es lo que cambia todo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp" id="experience">
+  <div class="s-inner">
+    <p class="s-label reveal">Tu experiencia</p>
+    <div class="exp-intro">
+      <h2 class="reveal">Todo lo que<br>necesitás para<br><em>no parar.</em></h2>
+      <p class="reveal">Kairos no es una app de rutinas genéricas. Es tu sistema personal de entrenamiento — diseñado por tu coach, potenciado por IA, vivido por vos.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <span class="exp-icon">◈</span>
+        <h3>Tu rutina, en tu celular</h3>
+        <p>Cada semana tu coach actualiza tu plan de entrenamiento. Lo ves en la app, con los ejercicios, series, repeticiones y videos de demostración. Sin preguntar por WhatsApp.</p>
+        <p class="exp-detail">Timer de descanso · Videos demo · Checkmarks por serie</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="exp-icon">⬡</span>
+        <h3>Nutrición que tiene sentido</h3>
+        <p>Tu plan nutricional con macros, calorías y comidas organizadas por tiempo. Tracker de agua integrado. Y si no te gusta algo, la IA sugiere alternativas al instante.</p>
+        <p class="exp-detail">Macros diarios · Alternativas IA · Tracker de agua</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="exp-icon">△</span>
+        <h3>Tu progreso, visible</h3>
+        <p>Gráfica de peso, medidas corporales, rachas de entrenamiento. Ver tus números cambiar semana a semana es el combustible que mantiene el hábito vivo.</p>
+        <p class="exp-detail">Gráfica de peso · Medidas · Racha diaria</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="exp-icon">◎</span>
+        <h3>Tu coach, siempre cerca</h3>
+        <p>Chat directo con tu entrenador desde la app. Recibís notificaciones cuando actualizan tu rutina. Y cuando completás tu entreno, tu coach lo sabe.</p>
+        <p class="exp-detail">Chat integrado · Push notifications · Agenda de sesiones</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="journey" id="journey">
+  <div class="s-inner">
+    <p class="s-label reveal" style="justify-content:center">Cómo funciona</p>
+    <h2 class="reveal">Cuatro pasos.<br><em>Un sistema.</em></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Tu coach te configura</h3>
+        <p>Te invita a Kairos y configura tu perfil — objetivos, nivel, restricciones. Todo personalizado desde el inicio.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Instalás la app</h3>
+        <p>Kairos se instala directo en tu celular como una app nativa. Sin App Store, sin complicaciones.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Empezás a entrenar</h3>
+        <p>Abrís la app, ves tu rutina del día y empezás. Timer de descanso, videos, checkmarks — todo ahí.</p>
+        <span class="step-arrow">→</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <h3>Ves tus resultados</h3>
+        <p>Cada semana tu progreso es visible. Tu coach ajusta el plan. Vos seguís avanzando.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <h2 class="reveal">El mejor<br>entrenamiento<br>que tuviste.<br><em>Siempre contigo.</em></h2>
+</section>
+
+<!-- STREAKS -->
+<section class="streaks">
+  <div class="s-inner">
+    <p class="s-label reveal">Lo que cambia</p>
+    <div class="streak-grid">
+      <div class="streak-card reveal">
+        <div class="streak-num">🔥</div>
+        <p class="streak-label">Sistema de rachas que hace que no quieras parar. Cada día cuenta.</p>
+      </div>
+      <div class="streak-card reveal">
+        <div class="streak-num">100%</div>
+        <p class="streak-label">Personalizado para vos — no una rutina genérica copiada de internet.</p>
+      </div>
+      <div class="streak-card reveal">
+        <div class="streak-num">∞</div>
+        <p class="streak-label">Acceso a tu coach, tu rutina y tu progreso, desde donde estés, cuando quieras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-final" id="contact">
+  <h2 class="reveal">Empezá<br>a entrenar<br><em>de verdad.</em></h2>
+  <p class="reveal">Hablá con tu coach y pedile acceso a Kairos. <strong>Tu primera semana lo cambia todo.</strong></p>
+  <a href="https://wa.me/50600000000" class="btn-cta reveal">Quiero empezar →</a>
+</section>
+
+<footer>
+  <a href="#" style="font-family:'Cormorant Garamond',serif;font-weight:200;font-size:18px;letter-spacing:.4em;color:var(--gold);text-decoration:none;">KAIROS</a>
+  <p>© 2025 Kairos — Todos los derechos reservados</p>
+  <a href="coach.kairosclubs.com">Para coaches →</a>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*100);});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
